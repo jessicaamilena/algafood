@@ -1,6 +1,8 @@
 package com.algaworks.algafood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,17 +34,17 @@ public class CozinhaController {
 	
 	@GetMapping
 	public List<Cozinha> listar(){
-		return cozinhaRepository.listar();
+		return cozinhaRepository.findAll();
 	}
 	
 	@GetMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId) {
-		Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
+		Optional<Cozinha> cozinha = cozinhaRepository.findById(cozinhaId);
 		//return ResponseEntity.status(HttpStatus.OK).body(cozinha);  -ResponseEntity util para manipular resposta e construir lógica (if/else)
 		//return ResponseEntity.ok(cozinha);   						 //Shortcut da linha de cima
 		
-		if (cozinha != null) {
-			return ResponseEntity.ok(cozinha);
+		if (cozinha.isPresent()) {
+			return ResponseEntity.ok(cozinha.get());
 		}
 		
 		return ResponseEntity.notFound().build();
@@ -56,13 +58,13 @@ public class CozinhaController {
 	
 	@PutMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha){
-		Cozinha cozinhaAtual = cozinhaRepository.buscar(cozinhaId);
+		Optional<Cozinha> cozinhaAtual = cozinhaRepository.findById(cozinhaId);
 	
-		if(cozinhaAtual != null) {
-			BeanUtils.copyProperties (cozinha, cozinhaAtual, "id");
+		if(cozinhaAtual.isPresent()) {
+			BeanUtils.copyProperties (cozinha, cozinhaAtual.get(), "id");
 		
-			cozinhaAtual = cadastroCozinha.adicionar(cozinhaAtual);
-			return ResponseEntity.ok(cozinhaAtual);
+			Cozinha cozinhaSalva = cadastroCozinha.adicionar(cozinhaAtual.get());
+			return ResponseEntity.ok(cozinhaSalva);
 		}
 		
 		return ResponseEntity.notFound().build();
