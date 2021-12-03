@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
+import com.algaworks.algafood.domain.repository.spec.RestauranteComFreteGratisSpec;
+import com.algaworks.algafood.domain.repository.spec.RestauranteComNomeSemelhanteSpec;
 import com.algaworks.algafood.model.Cozinha;
 import com.algaworks.algafood.model.Restaurante;
 
@@ -67,6 +69,15 @@ public class TesteController {
 	@GetMapping("/restaurantes/count-por-cozinha")
 	public int restaurantesCountPorCozinha(Long cozinhaId){
 		return restauranteRepository.countByCozinhaId(cozinhaId);
+	}
+	
+	@GetMapping("/restaurantes/com-frete-gratis")
+	public List<Restaurante> restauranteComFreteGratis(String nome){
+		
+		RestauranteComFreteGratisSpec comFreteGratis = new RestauranteComFreteGratisSpec();
+		RestauranteComNomeSemelhanteSpec comNomeSemelhante = new RestauranteComNomeSemelhanteSpec(nome);
+		
+		return restauranteRepository.findAll(comFreteGratis.and(comNomeSemelhante));
 	}
 }
 
