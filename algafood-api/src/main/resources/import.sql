@@ -11,9 +11,9 @@ insert into cidade (id, nome, estado_id) values (3, 'Ceilândia', 3);
 insert into cidade (id, nome, estado_id) values (4, 'Várzea Grande', 1);
 insert into cidade (id, nome, estado_id) values (5, 'Campinas', 2);
 
-insert into restaurante (nome, taxa_frete, cozinha_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values ('Thai Gourmet', 10, 1, 1, '78118-800', 'Rua João Bueno', '1000', 'Centro');
-insert into restaurante (nome, taxa_frete, cozinha_id) values ('Japidinho', 12, 1);
-insert into restaurante (nome, taxa_frete, cozinha_id) values ('IndianFood', 5, 2);
+insert into restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_bairro) values ('Thai Gourmet', 10, 1, utc_timestamp, utc_timestamp, 1, '78118-800', 'Rua João Bueno', '1000', 'Centro');
+insert into restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values ('Japidinho', 12, 1, utc_timestamp, utc_timestamp);
+insert into restaurante (nome, taxa_frete, cozinha_id, data_cadastro, data_atualizacao) values ('IndianFood', 5, 2, utc_timestamp, utc_timestamp);
 
 insert into forma_pagamento (id, descricao) values (1, 'Dinheiro');
 insert into forma_pagamento (id, descricao) values (2, 'Cartão de crédito');
